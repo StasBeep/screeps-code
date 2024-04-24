@@ -44,3 +44,10 @@ module.exports.loop = function () {
         }
     }
 }
+
+// Создание screeps для upgrade (для строительства)
+Game.spawns['Spawn1'].spawnCreep([WORK, CARRY, MOVE], 'Upgrader1');
+
+// Разделение на роли разных скриперов
+Game.creeps['Harvester1'].memory.role = 'harvester';
+Game.creeps['Upgrader1'].memory.role = 'upgrader';
