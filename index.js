@@ -96,3 +96,53 @@ module.exports.loop = function () {
         }
     }
 }
+
+
+// ? Создание автоматического спавна скрипера
+var roleHarvester = require('role.harvester');
+var roleUpgrader = require('role.upgrader');
+
+module.exports.loop = function () {
+
+    // Переменная, которая содержит скриперов собирателей
+    var harvesters = _.filter(Game.creeps, (creep) => creep.memory.role == 'harvester');
+    console.log('Harvesters: ' + harvesters.length);
+
+    // если массив собирателей меньше 2,
+    if (harvesters.length < 2) {
+        // Переменная содержащая имя скрипера
+        var newName = 'Harvester' + Game.time;
+        console.log('Spawning new harvester: ' + newName);
+
+        // Заспавнь в Spawn1, скрипера со статусом: работа, перемещение, перенос, с именем newName и ролью harvester
+        Game.spawns['Spawn1'].spawnCreep([WORK, CARRY, MOVE], newName, {
+            memory: {
+                role: 'harvester'
+            }
+        });
+    }
+
+    // Если спавн спавнит
+    if (Game.spawns['Spawn1'].spawning) {
+        // переменная, которая содержит скриперов
+        var spawningCreep = Game.creeps[Game.spawns['Spawn1'].spawning.name];
+        // то спавн скриперы с этого спавна выдают текст, с определёнными стилями
+        Game.spawns['Spawn1'].room.visual.text(
+            '🛠️' + spawningCreep.memory.role,
+            Game.spawns['Spawn1'].pos.x + 1,
+            Game.spawns['Spawn1'].pos.y, {
+                align: 'left',
+                opacity: 0.8
+            });
+    }
+
+    for (var name in Game.creeps) {
+        var creep = Game.creeps[name];
+        if (creep.memory.role == 'harvester') {
+            roleHarvester.run(creep);
+        }
+        if (creep.memory.role == 'upgrader') {
+            roleUpgrader.run(creep);
+        }
+    }
+}
