@@ -45,9 +45,16 @@ module.exports.loop = function () {
     }
 }
 
-// Создание screeps для upgrade (для строительства)
+// Создание screeps для upgrade (для улучшения (слежения за контроллером))
 Game.spawns['Spawn1'].spawnCreep([WORK, CARRY, MOVE], 'Upgrader1');
 
 // Разделение на роли разных скриперов
 Game.creeps['Harvester1'].memory.role = 'harvester';
 Game.creeps['Upgrader1'].memory.role = 'upgrader';
+
+// создание скрипера (строителя), под названием Builder1, с ролью builder
+Game.spawns['Spawn1'].spawnCreep([WORK, CARRY, MOVE], 'Builder1', {
+    memory: {
+        role: 'builder'
+    }
+});
