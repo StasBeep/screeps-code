@@ -73,4 +73,26 @@ for (var name in Game.rooms) {
     console.log('Room "' + name + '" has ' + Game.rooms[name].energyAvailable + ' energy');
 }
 
-Game.rooms['sim'].energyAvailable // проверка в консоли
+Game.rooms['sim'].energyAvailable // проверка в консоли на количество энергии
+
+var roleHarvester = require('role.harvester');
+var roleUpgrader = require('role.upgrader');
+
+// новая функция (жизненый хук, работающий каждый тик)
+module.exports.loop = function () {
+
+    // переменная, которая с помощью filter, собирает в комнате скриперов собирателей
+    var harvesters = _.filter(Game.creeps, (creep) => creep.memory.role == 'harvester');
+    // вывод в консоли количества скриперов собирателей
+    console.log('Harvesters: ' + harvesters.length);
+
+    for (var name in Game.creeps) {
+        var creep = Game.creeps[name];
+        if (creep.memory.role == 'harvester') {
+            roleHarvester.run(creep);
+        }
+        if (creep.memory.role == 'upgrader') {
+            roleUpgrader.run(creep);
+        }
+    }
+}
