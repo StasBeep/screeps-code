@@ -58,3 +58,12 @@ Game.spawns['Spawn1'].spawnCreep([WORK, CARRY, MOVE], 'Builder1', {
         role: 'builder'
     }
 });
+
+// Сооздание большого скрипера (который передвигается и собирает), но очень медлительный
+//  (должен быть 2 уровень + ресурсы на строительство)
+Game.spawns['Spawn1'].spawnCreep([WORK, WORK, WORK, WORK, CARRY, MOVE, MOVE],
+    'HarvesterBig', {
+        memory: {
+            role: 'harvester'
+        }
+    });
