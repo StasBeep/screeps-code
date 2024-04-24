@@ -66,4 +66,11 @@ Game.spawns['Spawn1'].spawnCreep([WORK, WORK, WORK, WORK, CARRY, MOVE, MOVE],
         memory: {
             role: 'harvester'
         }
-    });
+});
+
+// Определение сколько энергии в комнате
+for (var name in Game.rooms) {
+    console.log('Room "' + name + '" has ' + Game.rooms[name].energyAvailable + ' energy');
+}
+
+Game.rooms['sim'].energyAvailable // проверка в консоли
